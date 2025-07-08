@@ -1,0 +1,43 @@
+name: go-app
+base: bare
+build-base: ubuntu@24.04 # image based on Ubuntu 24.04 LTS
+version: "24.04"
+summary: Basic Go app on Chiseled runtime container
+description: |
+    This rock provides a minimal Golang runtime environment for compiled applications,
+    and ships a basic Go application within, for demonstration purposes.
+platforms:
+    amd64:
+
+# Default OCI user will be _daemon_
+run-user: _daemon_
+
+parts:
+    go-app:
+        # Compile the Go application and include all the basic libraries it
+        # needs (as a dynamically linked binary) to execute
+        plugin: go
+        source: .
+        source-subdir: src
+        build-snaps:
+            - go/1.22/stable
+        # The following are all package slices
+        stage-packages:
+            - base-files_base
+            - base-files_release-info
+            - base-files_chisel
+            - tzdata_zoneinfo
+            - ca-certificates_data
+            - libc-bin_nsswitch
+            - libgcc-s1_libs
+            - libc6_libs
+            - libssl3t64_libs
+            - openssl_config
+
+# Create the Pebble service that will run the Go application
+services:
+    app:
+        command: app
+        override: replace
+        startup: enabled
+        on-success: shutdown

@@ -1,0 +1,8 @@
+summary: Go app
+
+services:
+  app:
+    override: replace
+    command: /app
+    startup: enabled
+    on-success: shutdown
