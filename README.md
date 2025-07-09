@@ -32,7 +32,7 @@ simply your local Docker daemon. Example:
 4. test it:
 
    ```bash
-   docker run --rm app:latest --verbose
+   docker run --rm go-app:latest --verbose
    ```
 
 ### Using Dockerfiles
@@ -55,5 +55,5 @@ add the new Go app as a Pebble service).
 2. test it:
 
    ```bash
-   docker run --rm app:latest --verbose
+   docker run --rm go-app:latest --verbose
    ```
